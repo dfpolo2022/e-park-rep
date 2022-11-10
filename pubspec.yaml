@@ -3,7 +3,7 @@ description: Flutter Bottom Navigation with Nested Routing Tutorial.
 publish_to: 'none' 
 version: 1.0.0+1
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.16.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -11,6 +11,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   auto_route: ^2.3.2
   salomon_bottom_bar: ^3.1.0
+
+  loggy: ^2.0.1
+  get: ^4.6.5
+
+  # For database and state management
+  firebase_core: ^1.17.1
+  firebase_auth: ^3.3.19
+  prompt_dialog: ^1.0.0
+  firebase_database: ^9.0.15
 
 dev_dependencies:
   flutter_test:
