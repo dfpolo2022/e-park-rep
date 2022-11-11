@@ -2,6 +2,11 @@ import 'dart:html';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:math';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/mapa/mapa_page.dart';
 
 class PostTile extends StatelessWidget {
   final Color tileColor;
@@ -19,29 +24,22 @@ class PostTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTileTap,
-      child: Card(
-        margin: const EdgeInsets.only(bottom: 20),
-        color: tileColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 100,
-            vertical: 40,
-          ),
-          child: Column(
-            children: [
-              Text(
-                postTitle,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+      child: Container(
+        margin: const EdgeInsets.only(top: 30),
+        decoration: BoxDecoration(
+            color: tileColor,
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+        height: 100,
+        width: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              postTitle,
+              style: const TextStyle(
+                  fontSize: 25, fontWeight: FontWeight.bold, color: Colors.red),
+            ),
+          ],
         ),
       ),
     );
@@ -146,9 +144,10 @@ class ParqueoWidget extends StatelessWidget {
                         color: parqueoColor,
                       ),
                       onPressed: () {
-                        context.router.push(SingleParqueoRoute(
-                          parqueoId: parqueoId,
-                        ));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MapaPage()), 
+                        );
                       },
                     ),
                   ),
@@ -188,60 +187,16 @@ class CodigoQR extends StatelessWidget {
   }
 }
 
-class MapaParqueo extends StatelessWidget {
-  final String linkImagen;
-  final String numeroParqueadero;
-  const MapaParqueo({
-    Key? key,
-    required this.linkImagen,
-    required this.numeroParqueadero,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(children: [
-          const SizedBox(height: 30),
-          Container(
-              alignment: Alignment.center,
-              width: 430,
-              height: 390,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-              ),
-              child: Image.network(
-                linkImagen,
-                width: 410,
-                height: 390,
-              )),
-          const SizedBox(height: 30),
-          TextButton(
-            child: const Text(
-              'Abrir en Google Maps',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text(
-                      'No Google Maps implementation in UI demonstration.')));
-            },
-          ),
-        ]),
-      ],
-    );
-  }
-}
-
 class UserAvatar extends StatelessWidget {
   final Color avatarColor;
   final String username;
+  final Color textColor;
   final void Function()? onAvatarTap;
   const UserAvatar({
     Key? key,
     required this.avatarColor,
     required this.username,
+    required this.textColor,
     this.onAvatarTap,
   }) : super(key: key);
 
@@ -265,10 +220,7 @@ class UserAvatar extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               username,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 14, color: textColor),
               textAlign: TextAlign.center,
             ),
           ],

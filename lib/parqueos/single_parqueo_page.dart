@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/data/app_data.dart';
 import 'package:auto_route/src/router/controller/controller_scope.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/widgets.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/mapa/mapa_page.dart';
 
 class SingleParqueoPage extends StatelessWidget {
   final int parqueoId;
@@ -30,10 +31,7 @@ class SingleParqueoPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 40),
               ),
-              MapaParqueo(
-                  linkImagen:
-                      'https://2.bp.blogspot.com/-rAvZDK7KWWU/W4GIDCyrHTI/AAAAAAAAAFI/cn250kQYsD8_u8P-6FkrBixQ3QZ4ApsxACLcBGAs/s1600/route_google_map.png',
-                  numeroParqueadero: parqueo.numeroParqueo.toString()),
+              const MapaPage(),
               const SizedBox(height: 30),
               const AutoBackButton(
                 color: Colors.red,
