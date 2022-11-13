@@ -1,85 +1,116 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/data/app_data.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/routes/router.gr.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/services/local_storage.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/widgets.dart';
 
-class SelectedParqueoPage extends StatelessWidget {
+class SelectedParqueoPage extends StatefulWidget {
   final int selectedId;
-  SelectedParqueoPage({
+  const SelectedParqueoPage({
     Key? key,
-    @PathParam() required this.selectedId,
+    required this.selectedId,
   }) : super(key: key);
+
+  @override
+  _SelectedParqueoState createState() => _SelectedParqueoState();
+}
+
+class _SelectedParqueoState extends State<SelectedParqueoPage> {
+  Duration duration = Duration();
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    startTimer();
+  }
+
+  void addTime() {
+    final addSeconds = 1;
+
+    setState(() {
+      final seconds = duration.inSeconds + addSeconds;
+
+      duration = Duration(seconds: seconds);
+    });
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final parqueo = Parqueo.parqueos[selectedId];
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ParqueoWidget(
-              parqueoColor: parqueo.parqueoColor,
-              parqueoId: parqueo.parqueoId,
-              numeroParqueo: parqueo.numeroParqueo,
-              cupoParqueo: parqueo.cupoParqueo,
-              tiempoParqueo: parqueo.tiempoParqueo,
-              onParqueoTap: () {
-                null;
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours.remainder(60));
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    final parqueo = Parqueo.parqueos[LocalStorage.prefs.getInt('parqueoId')!];
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFC4261D),
+          title: const Text('E-Park'),
+          leading: const Icon(Icons.local_parking_outlined),
+          shadowColor: Colors.black,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.supervised_user_circle),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('No user in UI demonstration.')));
               },
             ),
-            const SizedBox(height: 30),
-            const CodigoQR(),
+            Container(
+              margin: const EdgeInsets.all(5.0),
+              color: const Color(0xFFC4261D),
+              width: 5.0,
+            ),
           ],
         ),
-      ),
-    );
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ParqueoWidget(
+                  parqueoColor: parqueo.parqueoColor,
+                  parqueoId: parqueo.parqueoId,
+                  numeroParqueo: parqueo.numeroParqueo,
+                  cupoParqueo: parqueo.cupoParqueo,
+                  tiempoParqueo: parqueo.tiempoParqueo,
+                  onParqueoTap: () {
+                    null;
+                  },
+                ),
+                SizedBox(height: 30),
+                Text(
+                  'Tiempo transcurrido: $hours:$minutes:$seconds',
+                  style: const TextStyle(
+                      color: Color(0xFFC4261D), fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 30),
+                const CodigoQR(),
+                SizedBox(height: 30),
+                TextButton(
+                  onPressed: () {
+                    null;
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
+                    primary: const Color(0xFFC4261D),
+                  ),
+                  child: const Text(
+                    'Pagar parqueadero',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
-}
-
-Future<void> _showMyDialog(BuildContext context, String index) async {
-  return showDialog<void>(
-    context: context,
-    builder: (_) => popupConfirmacion(context, index),
-  );
-}
-
-Widget popupConfirmacion(BuildContext context, String index) {
-  return AlertDialog(
-    title: const Text(
-      'Confirmación',
-      style: TextStyle(fontWeight: FontWeight.bold),
-    ),
-    content:
-        Text('Usted ha seleccionado el parqueadero #$index, ¿Desea confirmar?'),
-    actions: <Widget>[
-      TextButton(
-        child: const Text(
-          'Si',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        onPressed: () {
-          Navigator.of(context, rootNavigator: true).pop('dialog');
-          /*Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SeleccionPage()));*/
-        },
-      ),
-      TextButton(
-        child: const Text(
-          'No',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        onPressed: () {
-          Navigator.of(context, rootNavigator: true).pop('dialog');
-
-          /*Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MapaPage()));*/
-        },
-      ),
-    ],
-    elevation: 24.0,
-  );
 }

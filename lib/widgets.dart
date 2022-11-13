@@ -1,11 +1,4 @@
-import 'dart:html';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/routes/router.gr.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:math';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/mapa/mapa_page.dart';
 
 class PostTile extends StatelessWidget {
@@ -71,7 +64,10 @@ class ParqueoWidget extends StatelessWidget {
             margin: const EdgeInsets.only(top: 30),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                border: Border.all(color: parqueoColor),
+                border: Border.all(
+                  color: const Color(0xFFC4261D),
+                ),
+                color: const Color(0xFFC4261D),
                 borderRadius: const BorderRadius.all(Radius.circular(20))),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,6 +79,9 @@ class ParqueoWidget extends StatelessWidget {
                       borderRadius: const BorderRadius.horizontal(
                           left: Radius.circular(20), right: Radius.circular(0)),
                       color: parqueoColor,
+                      border: Border.all(
+                        color: const Color(0xFFC4261D),
+                      ),
                     ),
                     height: 100.0,
                     child: Text(
@@ -146,7 +145,8 @@ class ParqueoWidget extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const MapaPage()), 
+                          MaterialPageRoute(
+                              builder: (context) => const MapaPage()),
                         );
                       },
                     ),
@@ -166,9 +166,12 @@ class CodigoQR extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 370,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+          border: Border.all(
+            color: const Color(0xFFC4261D),
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: Column(
         children: const [
           Icon(

@@ -1,43 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/data/app_data.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/routes/router.gr.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/parqueos/parqueo_seleccionado_page.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/services/local_storage.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/widgets.dart';
 
 class ParqueosPage extends StatelessWidget {
   ParqueosPage({Key? key}) : super(key: key);
   final parqueos = Parqueo.parqueos;
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'SELECCIONAR UN PARQUEADERO',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFC4261D),
+          title: const Text('E-Park'),
+          leading: const Icon(Icons.local_parking_outlined),
+          shadowColor: Colors.black,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.supervised_user_circle),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('No user in UI demonstration.')));
+              },
             ),
-            for (int i = 0; i < parqueos.length; i++)
-              ParqueoWidget(
-                parqueoColor: parqueos[i].parqueoColor,
-                parqueoId: parqueos[i].parqueoId,
-                numeroParqueo: parqueos[i].numeroParqueo,
-                cupoParqueo: parqueos[i].cupoParqueo,
-                tiempoParqueo: parqueos[i].tiempoParqueo,
-                onParqueoTap: () {
-                  _showMyDialog(context, parqueos[i].numeroParqueo,
-                      parqueos[i].parqueoId);
-                },
-              ),
+            Container(
+              margin: const EdgeInsets.all(5.0),
+              color: const Color(0xFFC4261D),
+              width: 5.0,
+            ),
           ],
         ),
-      ),
-    );
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'SELECCIONAR UN PARQUEADERO',
+                  style: TextStyle(
+                      color: Color(0xFFC4261D), fontWeight: FontWeight.bold),
+                ),
+                for (int i = 0; i < parqueos.length; i++)
+                  ParqueoWidget(
+                    parqueoColor: parqueos[i].parqueoColor,
+                    parqueoId: parqueos[i].parqueoId,
+                    numeroParqueo: parqueos[i].numeroParqueo,
+                    cupoParqueo: parqueos[i].cupoParqueo,
+                    tiempoParqueo: parqueos[i].tiempoParqueo,
+                    onParqueoTap: () {
+                      _showMyDialog(context, parqueos[i].numeroParqueo,
+                          parqueos[i].parqueoId);
+                    },
+                  ),
+                SizedBox(height: 30),
+                const Text(
+                  'Recuerde solo seleccionar el parqueadero una vez que ha terminado de parquearse.',
+                  style: TextStyle(color: Color(0xFFC4261D)),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
 
@@ -65,9 +93,14 @@ Widget popupConfirmacion(BuildContext context, int index, int numParqueo) {
         ),
         onPressed: () {
           Navigator.of(context, rootNavigator: true).pop('dialog');
-          context.router.push(SelectedParqueoRoute(
-            selectedId: numParqueo,
-          ));
+          LocalStorage.prefs.setInt('parqueoId', numParqueo);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SelectedParqueoPage(
+                  selectedId: numParqueo,
+                ),
+              ));
         },
       ),
       TextButton(

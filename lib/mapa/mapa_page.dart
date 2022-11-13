@@ -41,8 +41,8 @@ class _HomePageState extends State<MapaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text('UBICACION DE PARQUEADEROS'),
+        backgroundColor: const Color(0xFFC4261D),
+        title: const Text('UBICACIÓN DE PARQUEADEROS'),
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
@@ -79,7 +79,8 @@ class _HomePageState extends State<MapaPage> {
               markerId: MarkerId("Currentlocation"),
               position: LatLng(value.latitude, value.longitude),
               infoWindow: InfoWindow(
-                title: 'My Current Location, Coordinates ${value.latitude}, ${value.longitude}',
+                title:
+                    'My Current Location, Coordinates ${value.latitude}, ${value.longitude}',
               ),
               icon: BitmapDescriptor.defaultMarker,
             ));
