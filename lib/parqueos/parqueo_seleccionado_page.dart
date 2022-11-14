@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/data/app_data.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/services/local_storage.dart';
 import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/widgets.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/settings/settings_page.dart';
+import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/posts/posts_page.dart';
 
 class SelectedParqueoPage extends StatefulWidget {
   final int selectedId;
@@ -55,10 +57,13 @@ class _SelectedParqueoState extends State<SelectedParqueoPage> {
           shadowColor: Colors.black,
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.supervised_user_circle),
+              icon: const Icon(Icons.settings),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('No user in UI demonstration.')));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ));
               },
             ),
             Container(
@@ -97,7 +102,11 @@ class _SelectedParqueoState extends State<SelectedParqueoPage> {
                 SizedBox(height: 30),
                 TextButton(
                   onPressed: () {
-                    null;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PostsPage(),
+                        ));
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),

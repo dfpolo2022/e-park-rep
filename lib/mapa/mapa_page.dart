@@ -76,11 +76,11 @@ class _HomePageState extends State<MapaPage> {
 
             // Marker aÃ±adido
             _markers.add(Marker(
-              markerId: MarkerId("Currentlocation"),
+              markerId: MarkerId("Ubicacion Actual"),
               position: LatLng(value.latitude, value.longitude),
               infoWindow: InfoWindow(
                 title:
-                    'My Current Location, Coordinates ${value.latitude}, ${value.longitude}',
+                    'Mi ubicacion actual, coordenadas ${value.latitude}, ${value.longitude}',
               ),
               icon: BitmapDescriptor.defaultMarker,
             ));

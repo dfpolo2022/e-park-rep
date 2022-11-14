@@ -8,8 +8,6 @@ class Post {
   static final posts = [
     Post(Colors.white, 'Pago en línea', 1),
     Post(Colors.white, 'Pago anticipado', 2),
-    Post(Colors.white, 'Check-In', 3),
-    Post(Colors.white, 'Check-Out', 4),
   ];
   final Color color;
   final String title;
@@ -28,10 +26,11 @@ class User {
 
   User(this.color, this.username, this.id);
 }
+
 Random random = Random();
-            int randomNumber1 = random.nextInt(100);
-            int randomNumber2 = random.nextInt(100);
-            int randomNumber3 = random.nextInt(100);
+int randomNumber1 = random.nextInt(100);
+int randomNumber2 = random.nextInt(100);
+int randomNumber3 = random.nextInt(100);
 
 class Parqueo {
   static final parqueos = [

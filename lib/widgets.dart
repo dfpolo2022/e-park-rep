@@ -21,7 +21,10 @@ class PostTile extends StatelessWidget {
         margin: const EdgeInsets.only(top: 30),
         decoration: BoxDecoration(
             color: tileColor,
-            borderRadius: const BorderRadius.all(Radius.circular(20))),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            border: Border.all(
+              color: const Color(0xFFC4261D),
+            )),
         height: 100,
         width: 300,
         child: Column(
