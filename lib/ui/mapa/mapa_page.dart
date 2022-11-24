@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/data/app_data.dart';
+import 'package:e_park/ui/data/app_data.dart';
 
 class MapaPage extends StatefulWidget {
   const MapaPage({Key? key}) : super(key: key);

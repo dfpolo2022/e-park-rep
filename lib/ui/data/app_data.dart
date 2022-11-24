@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/widgets.dart';
+import 'package:e_park/widgets.dart';
 import 'dart:math';
 
 class Post {

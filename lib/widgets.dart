@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/mapa/mapa_page.dart';
+import 'package:e_park/ui/mapa/mapa_page.dart';
 
 class PostTile extends StatelessWidget {
   final Color tileColor;

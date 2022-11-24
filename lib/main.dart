@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/autenticacion/login.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/services/local_storage.dart';
+import 'package:e_park/ui/autenticacion/login.dart';
+import 'package:e_park/services/local_storage.dart';
+import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.configurePrefs();
+  Loggy.initLoggy(
+    logPrinter: const PrettyPrinter(
+      showColors: true,
+    ),
+  );
+  
   runApp(MyApp());
 }
 

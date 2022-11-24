@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/data/app_data.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/parqueos/parqueo_seleccionado_page.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/services/local_storage.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/widgets.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/settings/settings_page.dart';
+import 'package:e_park/ui/data/app_data.dart';
+import 'package:e_park/ui/parqueos/parqueo_seleccionado_page.dart';
+import 'package:e_park/services/local_storage.dart';
+import 'package:e_park/widgets.dart';
+import 'package:e_park/ui/settings/settings_page.dart';
 
 class ParqueosPage extends StatelessWidget {
   ParqueosPage({Key? key}) : super(key: key);

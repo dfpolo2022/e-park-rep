@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/autenticacion/signup.dart';
-import 'package:flutter_bottom_navigation_with_nested_routing_tutorial/parqueos/parqueos_page.dart';
+import 'package:e_park/ui/autenticacion/signup.dart';
+import 'package:e_park/ui/parqueos/parqueos_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

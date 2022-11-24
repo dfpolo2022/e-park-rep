@@ -1,5 +1,5 @@
-name: flutter_bottom_navigation_with_nested_routing_tutorial
-description: Flutter Bottom Navigation with Nested Routing Tutorial.
+name: e_park
+description: App for parking for Universidad del Norte.
 publish_to: 'none' 
 version: 1.0.0+1
 environment:
@@ -16,6 +16,10 @@ dependencies:
   google_maps_flutter: ^2.1.8
   email_validator: ^2.1.17
   shared_preferences: ^2.0.15
+  loggy: ^2.0.3
+  get: ^4.6.5
+  http: ^0.13.3
+  sqflite: ^2.0.0+4
 
 dev_dependencies:
   flutter_test:
