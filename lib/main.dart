@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:e_park/ui/autenticacion/login.dart';
+import 'package:connectivity/connectivity.dart';
+
+import 'package:e_park/core/network_info.dart';
 import 'package:e_park/services/local_storage.dart';
+import 'package:e_park/controller/UsersController.dart';
+import 'package:e_park/ui/autenticacion/login.dart';
+import 'package:e_park/ui/registerVehicle/vehicle_form.dart';
+
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
@@ -12,7 +18,10 @@ void main() async {
       showColors: true,
     ),
   );
-  
+  Get.put(UserController());
+  Get.put(Connectivity());
+  Connectivity c = Get.find();
+  Get.put(NetworkInfo(connectivity: c));
   runApp(MyApp());
 }
 
@@ -24,7 +33,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E-Park',
-      home: LoginPage(),
+      home: VehicleRegistration(),
     );
   }
 }

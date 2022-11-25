@@ -84,9 +84,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text("E-Mail"),
               ),
               const Divider(),
-              const ListTile(
-                leading: Icon(Icons.car_rental),
-                title: Text("Vehículos asociados"),
+              ListTile(
+                leading: const Icon(Icons.car_rental),
+                title: const Text("Vehículos asociados"),
+                onTap: () {
+                  Navigator.pushNamed(context, "/vehicles");
+                },
               ),
               const Divider(),
               const ListTile(
@@ -99,9 +102,33 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text("Cambiar contraseña"),
               ),
               const Divider(),
-              const ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text("Cerrar sesión"),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text("Cerrar sesión"),
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Cerrar sesión"),
+                      content: const Text("¿Está seguro de cerrar sesión?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Cancelar"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Aceptar"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
               const SizedBox(
                 height: 30,

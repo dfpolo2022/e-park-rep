@@ -5,25 +5,34 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:e_park/ui/autenticacion/login.dart';
 import 'package:e_park/data/models/users.dart';
+import 'package:e_park/data/models/vehicle.dart';
 import 'package:e_park/controller/UsersController.dart';
 import 'package:get/get.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class VehicleRegistration extends StatefulWidget {
+  const VehicleRegistration({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<VehicleRegistration> createState() => _VehicleRegistrationState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _VehicleRegistrationState extends State<VehicleRegistration> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
   UserController userController = Get.find();
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
+  final TextEditingController brandController = TextEditingController();
+  final TextEditingController modelController = TextEditingController();
+  final TextEditingController yearController = TextEditingController();
+  final TextEditingController colorController = TextEditingController();
+  final TextEditingController registrationController = TextEditingController();
+
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.parse(s, (e) => null) != null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Registrar',
+              'Registrar vehiculo',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
@@ -58,10 +67,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       Expanded(
                         child: TextFormField(
                           maxLines: 1,
-                          controller: nameController,
+                          controller: brandController,
                           decoration: InputDecoration(
-                            hintText: 'Nombre',
-                            prefixIcon: const Icon(Icons.person),
+                            hintText: 'Marca',
+                            prefixIcon: const Icon(Icons.logo_dev),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -74,10 +83,55 @@ class _RegisterPageState extends State<RegisterPage> {
                       Expanded(
                         child: TextFormField(
                           maxLines: 1,
-                          controller: lastNameController,
+                          controller: modelController,
                           decoration: InputDecoration(
-                            hintText: 'Apellido',
-                            prefixIcon: const Icon(Icons.person),
+                            hintText: 'Modelo',
+                            prefixIcon: const Icon(Icons.model_training),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          maxLines: 1,
+                          controller: yearController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor ingrese el año';
+                            }
+                            if (!isNumeric(value)) {
+                              return 'Por favor ingrese un año valido';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Año',
+                            prefixIcon: const Icon(Icons.calendar_month),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          maxLines: 1,
+                          controller: colorController,
+                          decoration: InputDecoration(
+                            hintText: 'Color',
+                            prefixIcon: const Icon(Icons.color_lens),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -90,35 +144,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   TextFormField(
-                    validator: (value) => EmailValidator.validate(value!)
-                        ? null
-                        : "Por favor, ingresar una dirección de correo valida.",
-                    maxLines: 1,
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      hintText: 'E-Mail',
-                      prefixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Por favor, ingresar una contraseña.';
+                        return 'Por favor, ingresar una placa';
                       }
                       return null;
                     },
                     maxLines: 1,
                     obscureText: true,
-                    controller: passController,
+                    controller: registrationController,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
-                      hintText: 'Contraseña',
+                      hintText: 'Placa',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -130,13 +167,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        User user = User(
-                          name: nameController.text,
-                          lastname: lastNameController.text,
-                          email: emailController.text,
-                          password: passController.text,
-                        );
-                        log(user.toJson().toString());
+                        var userId = userController.storeUserEmail;
+
+                        Vehicle myVehicle = Vehicle(
+                            brand: brandController.text,
+                            model: modelController.text,
+                            year: yearController.text,
+                            color: colorController.text,
+                            registration: registrationController.text,
+                            userid: userId);
+                        log(myVehicle.toJson().toString());
                         bool register = await userController.register(
                             user.name.toString(),
                             user.lastname.toString(),
@@ -163,32 +203,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       primary: const Color(0xFFC4261D),
                     ),
                     child: const Text(
-                      'Registrar cuenta',
+                      'Registrar vehiculo',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Ya estás registrado?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Ingresar cuenta',
-                          style: TextStyle(color: Color(0xFFC4261D)),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

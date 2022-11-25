@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:e_park/ui/autenticacion/signup.dart';
 import 'package:e_park/ui/parqueos/parqueos_page.dart';
+import 'package:e_park/data/models/users.dart';
+import 'package:e_park/controller/UsersController.dart';
+
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,6 +19,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+
+  UserController userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                           ? null
                           : "Por favor, ingresar una dirección de correo valida.",
                       maxLines: 1,
+                      controller: emailController,
                       decoration: InputDecoration(
                         hintText: 'E-Mail',
                         prefixIcon: const Icon(Icons.email),
@@ -71,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       maxLines: 1,
+                      controller: passController,
                       obscureText: true,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock),
@@ -96,14 +107,29 @@ class _LoginPageState extends State<LoginPage> {
                       height: 20,
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ParqueosPage(),
-                            ),
+                          User user = User(
+                            email: emailController.text,
+                            password: passController.text,
                           );
+                          log(user.toJson().toString());
+                          bool login = await userController.login(
+                              user.email.toString(), user.password.toString());
+                          if (login) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ParqueosPage(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Error al loguear'),
+                              ),
+                            );
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(
