@@ -53,6 +53,22 @@ class PostsPage extends StatelessWidget {
                       onTileTap: () {
                         _showMyDialog(context);
                       }),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
+                    primary: const Color(0xFFC4261D),
+                  ),
+                  child: const Text(
+                    'Regresar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
             ),
           ),

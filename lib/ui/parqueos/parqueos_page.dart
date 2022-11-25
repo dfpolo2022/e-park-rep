@@ -4,6 +4,7 @@ import 'package:e_park/ui/parqueos/parqueo_seleccionado_page.dart';
 import 'package:e_park/services/local_storage.dart';
 import 'package:e_park/widgets.dart';
 import 'package:e_park/ui/settings/settings_page.dart';
+import 'package:e_park/ui/mapa/mapa_page.dart';
 
 class ParqueosPage extends StatelessWidget {
   ParqueosPage({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class ParqueosPage extends StatelessWidget {
                     cupoParqueo: parqueos[i].cupoParqueo,
                     tiempoParqueo: parqueos[i].tiempoParqueo,
                     onParqueoTap: () {
-                      _showMyDialog(context, parqueos[i].numeroParqueo,
+                      _showMyDialogUbicacion(context, parqueos[i].numeroParqueo,
                           parqueos[i].parqueoId);
                     },
                   ),
@@ -81,6 +82,51 @@ Future<void> _showMyDialog(
   );
 }
 
+Future<void> _showMyDialogUbicacion(
+    BuildContext context, int index, int numParqueo) async {
+  return showDialog<void>(
+    context: context,
+    builder: (_) => popupUbicacion(context, index, numParqueo),
+  );
+}
+
+Widget popupUbicacion(BuildContext context, int index, int numParqueo) {
+  return AlertDialog(
+    title: const Text(
+      'Confirmación',
+      style: TextStyle(fontWeight: FontWeight.bold),
+    ),
+    content: Text(
+        'Usted ha seleccionado el parqueadero #${index.toString()}, ¿Sabe llegar a este parqueadero?'),
+    actions: <Widget>[
+      TextButton(
+        child: const Text(
+          'Si',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+          _showMyDialog(context, index, numParqueo);
+        },
+      ),
+      TextButton(
+        child: const Text(
+          'No',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MapaPage()),
+          );
+        },
+      ),
+    ],
+    elevation: 24.0,
+  );
+}
+
 Widget popupConfirmacion(BuildContext context, int index, int numParqueo) {
   return AlertDialog(
     title: const Text(
@@ -88,7 +134,7 @@ Widget popupConfirmacion(BuildContext context, int index, int numParqueo) {
       style: TextStyle(fontWeight: FontWeight.bold),
     ),
     content: Text(
-        'Usted ha seleccionado el parqueadero #${index.toString()}, ¿Desea confirmar?'),
+        '¿Ya se encuentra parqueado en el parqueadero #${index.toString()}? El tiempo va a comenzar a correr al confirmar!'),
     actions: <Widget>[
       TextButton(
         child: const Text(
