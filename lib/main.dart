@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E-Park',
-      home: VehicleRegistration(),
+      home: LoginPage(),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:e_park/ui/data/app_data.dart';
 import 'package:e_park/services/local_storage.dart';
 import 'package:e_park/widgets.dart';
 import 'package:e_park/ui/settings/settings_page.dart';
-import 'package:e_park/ui/posts/posts_page.dart';
+import 'package:e_park/ui/posts/single_post_page.dart';
 
 class SelectedParqueoPage extends StatefulWidget {
   final int selectedId;
@@ -105,7 +105,7 @@ class _SelectedParqueoState extends State<SelectedParqueoPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PostsPage(),
+                          builder: (context) => PaymentPage(),
                         ));
                   },
                   style: ElevatedButton.styleFrom(

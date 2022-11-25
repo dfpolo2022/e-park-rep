@@ -20,7 +20,7 @@ class VehicleController extends GetxController {
     super.onInit();
   }
 
-  Future<bool> addVehicle(Vehicle v) async {
+  /*Future<bool> addVehicle(Vehicle v) async {
     Map data = v.toJson();
     var body = json.encode(data);
     var response = await http.post(Uri.parse(apiURL + 'login'),
@@ -34,5 +34,5 @@ class VehicleController extends GetxController {
 
   Future<bool> getMyVehicles() async {}
 
-  Future<bool> updateVehicle(Vehicle v) async {}
+  Future<bool> updateVehicle(Vehicle v) async {}*/
 }

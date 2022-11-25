@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:e_park/ui/autenticacion/login.dart';
+import 'package:e_park/ui/registerVehicle/vehicle_form.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -88,7 +90,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 leading: const Icon(Icons.car_rental),
                 title: const Text("Vehículos asociados"),
                 onTap: () {
-                  Navigator.pushNamed(context, "/vehicles");
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VehicleRegistration(),
+                    ),
+                  );
                 },
               ),
               const Divider(),
@@ -120,8 +127,12 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
                           },
                           child: const Text("Aceptar"),
                         ),

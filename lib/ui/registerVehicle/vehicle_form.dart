@@ -28,10 +28,12 @@ class _VehicleRegistrationState extends State<VehicleRegistration> {
   final TextEditingController registrationController = TextEditingController();
 
   bool isNumeric(String s) {
-    if (s == null) {
-      return false;
+    if (int.parse(s) <= 2022) {
+      if (int.parse(s) > 1900) {
+        return true;
+      }
     }
-    return double.parse(s, (e) => null) != null;
+    return false;
   }
 
   @override
@@ -68,6 +70,12 @@ class _VehicleRegistrationState extends State<VehicleRegistration> {
                         child: TextFormField(
                           maxLines: 1,
                           controller: brandController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor ingrese la marca';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Marca',
                             prefixIcon: const Icon(Icons.logo_dev),
@@ -84,6 +92,12 @@ class _VehicleRegistrationState extends State<VehicleRegistration> {
                         child: TextFormField(
                           maxLines: 1,
                           controller: modelController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor ingrese el modelo';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Modelo',
                             prefixIcon: const Icon(Icons.model_training),
@@ -129,6 +143,12 @@ class _VehicleRegistrationState extends State<VehicleRegistration> {
                         child: TextFormField(
                           maxLines: 1,
                           controller: colorController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor ingrese el color';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Color',
                             prefixIcon: const Icon(Icons.color_lens),
@@ -151,7 +171,6 @@ class _VehicleRegistrationState extends State<VehicleRegistration> {
                       return null;
                     },
                     maxLines: 1,
-                    obscureText: true,
                     controller: registrationController,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
@@ -177,18 +196,14 @@ class _VehicleRegistrationState extends State<VehicleRegistration> {
                             registration: registrationController.text,
                             userid: userId);
                         log(myVehicle.toJson().toString());
-                        bool register = await userController.register(
+                        bool register =
+                            true; /*await userController.register(
                             user.name.toString(),
                             user.lastname.toString(),
                             user.email.toString(),
-                            user.password.toString());
+                            user.password.toString());*/
                         if (register) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ParqueosPage(),
-                            ),
-                          );
+                          Navigator.of(context).pop();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
